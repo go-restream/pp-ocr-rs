@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Crates.io](https://img.shields.io/crates/v/pp-ocr-rs.svg)](https://crates.io/crates/pp-ocr-rs)
 
-**High Performance · Rust-based OCR Engine**
+**High Performance · Rust-based OCR Service**
 
 Image text recognition service based on Paddle OCR onnx models, compatible with OpenAI's chat/completions API.
 
@@ -245,45 +245,6 @@ cargo test
 
 # Run examples
 cargo run --example ocr_demo
-```
-
-### API Usage Example
-
-```rust
-use pp_ocr_rs::{OcrLite, OcrError};
-
-fn main() -> Result<(), OcrError> {
-    let mut ocr = OcrLite::new();
-
-    // Initialize models
-    ocr.init_models(
-        "./models/det.onnx",
-        "./models/cls.onnx",
-        "./models/rec.onnx",
-        2, // thread count
-    )?;
-
-    // Recognize image
-    let result = ocr.detect_from_path(
-        "test.png",
-        50,    // box_limit
-        1024,  // max_box_size
-        0.5,   // box_thresh
-        0.3,   // min_box_size
-        1.6,   // unclip_ratio
-        false, // use_angle_cls
-        false, // use_direction_cls
-    )?;
-
-    // Output result
-    for block in result.text_blocks {
-        println!("Text: {} (Confidence: {:.2}%)",
-                block.text,
-                block.text_score * 100.0);
-    }
-
-    Ok(())
-}
 ```
 
 ---

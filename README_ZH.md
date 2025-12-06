@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Crates.io](https://img.shields.io/crates/v/pp-ocr-rs.svg)](https://crates.io/crates/pp-ocr-rs)
 
-**高性能 · Rust 实现的 OCR 引擎**
+**高性能 · Rust 实现的 OCR 服务**
 
 基于 Paddle OCR onnx 模型的图片文字识别服务，兼容OpenAI 的 chat/completions 接口。
 
@@ -245,45 +245,6 @@ cargo test
 
 # 运行示例
 cargo run --example ocr_demo
-```
-
-### API 使用示例
-
-```rust
-use pp_ocr_rs::{OcrLite, OcrError};
-
-fn main() -> Result<(), OcrError> {
-    let mut ocr = OcrLite::new();
-
-    // 初始化模型
-    ocr.init_models(
-        "./models/det.onnx",
-        "./models/cls.onnx",
-        "./models/rec.onnx",
-        2, // 线程数
-    )?;
-
-    // 识别图片
-    let result = ocr.detect_from_path(
-        "test.png",
-        50,    // box_limit
-        1024,  // max_box_size
-        0.5,   // box_thresh
-        0.3,   // min_box_size
-        1.6,   // unclip_ratio
-        false, // use_angle_cls
-        false, // use_direction_cls
-    )?;
-
-    // 输出结果
-    for block in result.text_blocks {
-        println!("文本: {} (置信度: {:.2}%)",
-                block.text,
-                block.text_score * 100.0);
-    }
-
-    Ok(())
-}
 ```
 
 ---
