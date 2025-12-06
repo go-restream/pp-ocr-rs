@@ -1,0 +1,9 @@
+pub mod angle_net;
+pub mod base_net;
+pub mod crnn_net;
+pub mod db_net;
+pub mod ocr_error;
+pub mod ocr_lite;
+pub mod ocr_result;
+pub mod ocr_utils;
+pub mod scale_param;

@@ -1,0 +1,34 @@
+# pp-ocr-rs API server configuration file
+
+ort_log_level: "warning"
+
+det_model_path: "./models/ch_PP-OCRv5_mobile_det.onnx"
+cls_model_path: "./models/ch_ppocr_mobile_v2.0_cls_infer.onnx"
+rec_model_path: "./models/ch_PP-OCRv5_rec_mobile_infer.onnx"
+
+# Server configuration
+server:
+  bind_addr: "0.0.0.0:8080"
+  num_threads: 4
+  log_level: "info"
+  ocr_pool_size: 2 
+  warmup_on_startup: true
+
+# Detection parameters (optional)
+detection:
+  box_limit: 50
+  box_thresh: 0.5
+  min_box_size: 30
+  unclip_ratio: 1.6
+  use_dilation: false
+  use_polygon_score: false
+
+# Recognition parameters (optional)
+recognition:
+  use_log: true
+
+# Output parameters (mainly used for CLI, not yet used in server)
+output:
+  include_confidence: false
+  pretty_json: true
+  include_processing_time: true

@@ -1,0 +1,51 @@
+[package]
+name = "pp-ocr-rs"
+version = "0.1.0"
+edition = "2024"
+readme = "README.md"
+keywords = ["paddle", "ocr", "onnx"]
+license = "Apache-2.0"
+description = "Image text recognition service based on Paddle OCR onnx models, compatible with OpenAI's chat/completions API."
+repository = "https://github.com/go-restream/pp-ocr-rs"
+authors = ["XiaoYang <superspjj@163.com>"]
+
+[dependencies]
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+imageproc = "0.25"
+ndarray = "0.16"
+ort = { version = "2.0.0-rc.10", default-features = false, features = [
+    "ndarray",
+] }
+geo-types = "0.7"
+geo-clipper = "0.9"
+clipper-sys = "0.8"
+thiserror = "2"
+image = "0.25"
+
+# CLI dependencies
+clap = { version = "4.5", features = ["derive"] }
+serde_yaml = "0.9"
+indicatif = "0.17"
+glob = "0.3"
+atty = "0.2"
+env_logger = "0.11"
+log = "0.4"
+uuid = { version = "1.0", features = ["v4"] }
+
+# Server dependencies (optional)
+axum = { version = "0.7", optional = true }
+tokio = { version = "1", features = ["full"], optional = true }
+tower = { version = "0.4", optional = true }
+tower-http = { version = "0.5", features = ["trace"], optional = true }
+hyper = { version = "1", features = ["full"], optional = true }
+base64 = { version = "0.21", optional = true }
+chrono = { version = "0.4", optional = true }
+num_cpus = { version = "1.16", optional = true }
+tracing = "0.1"
+
+[features]
+default = ["download-binaries", "copy-dylibs", "ort/default"]
+download-binaries = ["ort/download-binaries"]
+copy-dylibs = ["ort/copy-dylibs"]
+server = ["axum", "tokio", "tower", "tower-http", "hyper", "base64", "chrono", "num_cpus"]

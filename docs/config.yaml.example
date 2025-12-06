@@ -1,0 +1,42 @@
+# PP-OCR-RS configuration file example
+# This file shows all configurable parameters and their default values
+
+# Server configuration
+server:
+  bind_addr: "0.0.0.0:8080"
+  num_threads: 4
+  # Log level: error, warn, info, debug, trace
+  log_level: "info"
+  # OCR engine pool configuration
+  ocr_pool_size: null  # OCR engine pool size, null means use number of CPU cores
+  warmup_on_startup: true  # Whether to warm up models on startup (recommended)
+
+# Model path configuration
+# If not specified, default paths will be used
+det_model_path: "./models/ch_PP-OCRv5_server_det.onnx"  # Detection model path
+cls_model_path: "./models/ch_ppocr_mobile_v2.0_cls_infer.onnx"  # Angle classification model path
+rec_model_path: "./models/ch_PP-OCRv5_rec_server_infer.onnx"  # Recognition model path
+# dict_path: "./models/dict.txt"  # Optional: custom dictionary file path
+
+# Feature toggles
+use_angle_cls: false  # Whether to use angle classification
+use_direction_cls: false  # Whether to use direction classification
+
+# Detection parameters configuration
+detection:
+  box_limit: 50  # Detection box limit count
+  box_thresh: 0.5  # Text box threshold (0.0-1.0)
+  min_box_size: 0.3  # Minimum box size threshold (0.0-1.0)
+  unclip_ratio: 1.6  # Text box expansion ratio
+  use_dilation: false  # Whether to use dilation operation
+  use_polygon_score: false  # Whether to use polygon scoring
+
+# Recognition parameters configuration
+recognition:
+  use_log: false  # Whether to use logarithmic space computation
+
+# Output parameters configuration
+output:
+  include_confidence: false  # Whether to include confidence information
+  pretty_json: false  # Whether to pretty-print JSON output
+  include_processing_time: false  # Whether to include processing time information
