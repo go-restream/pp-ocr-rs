@@ -206,7 +206,7 @@ print(f"Recognition result: {text}")
 
 | Test Image | Recognition Result | Confidence |
 |------------|-------------------|------------|
-| ![test1](docs/img/test_1.png) | Use Rust to call Paddle OCR models through ONNX Runtime for image text recognition. | 95.27% |
+| ![test1](docs/img/test_1.png) | 使用 Rust 通过 ONNX Runtime 调用 Paddle OCR 模型进行图片文字识别。 | 95.27% |
 | ![test2](docs/img/test_2.png) | 母婴用品连锁 | 99.71% |
 
 ### Performance Metrics
