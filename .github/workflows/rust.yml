@@ -82,13 +82,16 @@ jobs:
         copy README.md release\ 2>nul || echo README.md not found, skipping
         7z a ${{ matrix.asset_name }} .\release\*
 
-    - name: Generate checksum
+    - name: Generate checksum (Unix)
+      if: matrix.os != 'windows-latest'
+      run: sha256sum ${{ matrix.asset_name }} > ${{ matrix.asset_name }}.sha256
+
+    - name: Generate checksum (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: powershell
       run: |
-        if [ "${{ matrix.os }}" = "windows-latest" ]; then
-          certutil -hashfile ${{ matrix.asset_name }} SHA256 | findstr /v "hash" > ${{ matrix.asset_name }}.sha256
-        else
-          sha256sum ${{ matrix.asset_name }} > ${{ matrix.asset_name }}.sha256
-        fi
+        $hash = (Get-FileHash ${{ matrix.asset_name }} -Algorithm SHA256).Hash.ToLower()
+        $hash | Out-File -FilePath ${{ matrix.asset_name }}.sha256 -Encoding utf8
 
     - name: Upload release asset
       uses: softprops/action-gh-release@v1
@@ -96,3 +99,4 @@ jobs:
         files: |
           ${{ matrix.asset_name }}
           ${{ matrix.asset_name }}.sha256
+        overwrite: true  # 允许覆盖已存在的 release
